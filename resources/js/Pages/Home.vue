@@ -31,6 +31,7 @@ onMounted(() => {
 <template>
     <Head title="Instagram" />
     <MainLayout>
+        {{ posts }}
         <div class="mx-auto lg:pl-0 md:pl-[80px] pl-0">
             <Carousel
                     v-model="currentSlide"

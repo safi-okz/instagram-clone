@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,23 +21,22 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home'
-    );
-});
-
-Route::get('/user', function () {
-    return Inertia::render('User'
-    );
-});
-
 
 Route::middleware('auth')->group(function () {
+
+        Route::get('/', [HomeController::class, 'index'])->name('home.index');
+        Route::get('/users/{id}', [UserController::class, 'show'])->name('user.show');
+        Route::post('/users', [UserController::class, 'update'])->name('user.update');
+
         Route::post('/posts', [PostController::class, 'store'])->name('post.store');
         Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('post.destroy');
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('/comments', [CommentController::class, 'store'])->name('comment.store');
+        Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+
+        Route::get('/likes', [LikeController::class, 'store'])->name('like.store');
+        Route::delete('/likes/{id}', [LikeController::class, 'destroy'])->name('like.destroy');
 });
 
 require __DIR__.'/auth.php';
