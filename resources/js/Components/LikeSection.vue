@@ -1,8 +1,10 @@
 <template>
     <div class="flex items-center z-20 justify-between">
+        <!-- <pre>{{ post }}</pre> -->
         <div class="flex items-center">
-            <button class="-mt-[14px]">
-                <HeartOutline class="pl-3 cursor-pointer" :size="30" />
+            <button @click="$emit('like', {post, user})" class="-mt-[14px]">
+                <HeartOutline v-if="!isHeartActiveComputed" class="pl-3 cursor-pointer" :size="30" />
+                <Heart v-else class="pl-3 cursor-pointer" fillColor="#ff0000" :size="30" />
             </button>
             <CommentOutline class="pl-3 pt-[10px]" :size="30" />
             <SendOutline clas="pl-3 pt-[10px]" :size="30" />
@@ -12,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, toRefs } from 'vue';
+import { ref, toRefs, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3'
 
 import Heart from 'vue-material-design-icons/Heart.vue';
@@ -21,10 +23,22 @@ import CommentOutline from 'vue-material-design-icons/CommentOutline.vue';
 import SendOutline from 'vue-material-design-icons/SendOutline.vue'
 import BookMarkOutline from 'vue-material-design-icons/BookmarkOutline.vue';
 
-const props = defineProps(['posts']);
-const { posts } = toRefs(props);
+const props = defineProps(['post']);
+const { post } = toRefs(props);
 
 const emits = defineEmits(['like']);
 
-// const user = usePage().props.auth.user;
+const user = usePage().props.auth.user;
+
+const isHeartActiveComputed = computed(() => {
+    let isTrue = false;
+
+    for(let i = 0; i < post.value.liekes.length; i++){
+        const post = post.value.liekes[i];
+        if(post.user_id === user.id && like.post_id === post.value.id) {
+            isTrue = true;
+        }
+    }
+    return isTrue;
+})
 </script>
