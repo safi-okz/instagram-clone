@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::fine($id);
+        $post = Post::find($id);
 
         if(!empty($post->file)){
             $currentFile = public_path() . $post->file;
@@ -42,6 +42,6 @@ class PostController extends Controller
             }
         }
 
-        $post->delet();
+        $post->delete();
     }
 }

@@ -28,7 +28,7 @@ class LikeController extends Controller
     {
         $like = Like::find($id);
         if(count(collect($like)) > 0) {
-            $like->delet();
+            $like->delete();
         }
     }
 }

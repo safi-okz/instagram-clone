@@ -44,7 +44,7 @@ let showCreatePost = ref(false)
             <Link href="/" class="px-4">
                 <ChevronLeft size="30" class="cursor-pointer" />
             </Link>
-            <div class="font-extrabold text-gl">NAME HERE</div>
+            <div class="font-extrabold text-gl">{{ $page.props.auth.user.name }}</div>
             <AccountPlusOutline size="30" class="curosr-pointer px-4" />
 
         </div>
@@ -62,11 +62,11 @@ let showCreatePost = ref(false)
                 <MenuItem iconString="Messages" class="mb-4" />
                 <MenuItem iconString="Notifications" class="mb-4" />
                 <MenuItem @click="showCreatePost = true" iconString="Create" class="mb-4" />
-                <Link href="/">
+                <Link :href="route('user.show', { id: $page.props.auth.user.id })">
                     <MenuItem iconString="Profile" class="mb-4" />
                 </Link>
             </div>
-            <Link href="/" class="absolute bottom-0 px-3 w-full">
+            <Link :href="route('logout')" class="absolute bottom-0 px-3 w-full">
                 <MenuItem icon-string="Log out" class="mb-4" />
             </Link>
         </div>
@@ -80,12 +80,12 @@ let showCreatePost = ref(false)
                 </main>
             </div>
             <div v-if="$page.url === '/'" id="SuggestionsSection" class="lg:w-4/12 lg:block hidden text-black mt-10">
-                <Link href="/" class="flex items-center justify-between max-w-[300px]">
+                <Link :href="route('user.show', { id: $page.props.auth.user.id })" class="flex items-center justify-between max-w-[300px]">
                     <div class="flex items-center">
-                        <img src="https:picsum.photos/id/50/300/320" alt="" class="rounded-full z-50 w-[58px] h-[58px]">
+                        <img :src="$page.props.auth.user.file" alt="" class="rounded-full z-50 w-[58px] h-[58px]">
                         <div class="pl-4">
-                            <div class="text-black font-extrabold">Name here</div>
-                            <div class="text-gray-500 font-extrabold text-sm">Name here</div>
+                            <div class="text-black font-extrabold">{{ $page.props.auth.user.name }}</div>
+                            <div class="text-gray-500 font-extrabold text-sm">{{ $page.props.auth.user.name }}</div>
                         </div>
                     </div>
                     <button class="text-blue-500 hover:text-gray-900 text-xs font-extrabold">
@@ -98,18 +98,20 @@ let showCreatePost = ref(false)
                         See all
                     </button>
                 </div>
-                <Link href="/" class="flex items-center justify-between max-w-[300px] pb-2">
+                <div v-for="randomUser in $page.props.randomUsers" :key="randomUser">
+                    <Link :href="route('user.show', {id: randomUser.id})" class="flex items-center justify-between max-w-[300px] pb-2">
                     <div class="flex items-center">
-                        <img src="https:picsum.photos/id/200/300/320" alt="" class="rounded-full z-50 w-[37px] h-[37px]">
+                        <img :src="randomUser.file" alt="" class="rounded-full z-50 w-[37px] h-[37px]">
                         <div class="pl-4">
-                            <div class="text-black font-extrabold">Name here</div>
-                            <div class="text-gray-500 font-extrabold text-sm">Name here</div>
+                            <div class="text-black font-extrabold">{{ randomUser.name }}</div>
+                            <div class="text-gray-500 font-extrabold text-sm">Suggested for you</div>
                         </div>
                     </div>
                     <button class="text-blue-500 hover:text-gray-900 text-xs font-extrabold">
                         Follow
                     </button>
                 </Link>
+                </div>
                 <div class="max-w-[300px] mt-5">
                     <div class="text-sm text-gray-500">About help press api job privacy trems loaction language</div>
                     <div class="text-left text-gray-400 mt-4">&copy; INSTAGRAM FROM META</div>
@@ -125,8 +127,8 @@ let showCreatePost = ref(false)
             <SendOutline fillColor="#000" :size="33" class="cursor-pointer" />
             <Plus @click="showCreatePost = true" fillColor="#000" :size="33" class="cursor-pointer" />
             <AccountPlusOutline fillColor="#000" :size="33" class="cursor-pointer" />
-            <Link href="/">
-                <img src="https:picsum.photos/id/200/300/320" class="rounded-full w-[30px] cursor-pointer" alt="">
+            <Link :href="route('user.show', { id: $page.props.auth.user.id })">
+                <img :src="$page.props.auth.user.file" class="rounded-full w-[30px] cursor-pointer" alt="">
             </Link>
         </div>
     </div>

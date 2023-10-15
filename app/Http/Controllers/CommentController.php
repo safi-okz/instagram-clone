@@ -19,9 +19,11 @@ class CommentController extends Controller
             'comment' => 'required'
         ]);
 
+        $comment = new Comment;
+
         $comment->post_id = $request->input('post_id');
         $comment->user_id = $request->input('user_id');
-        $comment->comment = $request->input('comment');
+        $comment->text = $request->input('comment');
 
         $comment->save();
     }

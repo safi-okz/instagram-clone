@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AllPostCollection;
+use App\Http\Resources\AllPostsCollection;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\FileService;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -22,9 +23,9 @@ class UserController extends Controller
 
         $posts = Post::where('user_id', $id)->orderBy('created_at', 'desc')->get();
 
-        return Inertia::render('user', [
+        return Inertia::render('User', [
             'user' => $user,
-            'postByUser' => new AllPostCollection($posts)
+            'postByUser' => new AllPostsCollection($posts)
         ]);
     }
 
@@ -37,6 +38,5 @@ class UserController extends Controller
         $user = (new FileService)->updateFile(auth()->user(), $request, 'user');
         $user->save();
 
-        return redirect()->route('user.show', ['id' -> auth()->user()->id]);
-    }
+        return redirect()->route('user.show',['id' => auth()->user()->id]);    }
 }

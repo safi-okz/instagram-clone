@@ -32,8 +32,8 @@
                 <div id="TextAreaSection" class="max-w-[772px] w-full relative">
                     <div class="flex justify-between items-center p-3">
                         <div class="flex items-center">
-                            <img src="https://picsum.photos/id/50/300/320" alt="" class="rounded-full h-[38px] w-[38px]">
-                            <div class="ml-4 text-[15px] font-extrabold">Name here</div>
+                            <img :src="user.file" alt="" class="rounded-full h-[38px] w-[38px]">
+                            <div class="ml-4 text-[15px] font-extrabold">{{ user.name }}</div>
                         </div>
                     </div>
 
@@ -80,6 +80,8 @@ import Close from 'vue-material-design-icons/Close.vue';
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue';
 import MapMarkerOutline from 'vue-material-design-icons/MapMarkerOutline.vue';
 import ChevronDown from 'vue-material-design-icons/ChevronDown.vue';
+
+const user = usePage().props.auth.user;
 
 const emits = defineEmits(['close']);
 

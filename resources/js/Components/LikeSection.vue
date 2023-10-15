@@ -33,9 +33,9 @@ const user = usePage().props.auth.user;
 const isHeartActiveComputed = computed(() => {
     let isTrue = false;
 
-    for(let i = 0; i < post.value.liekes.length; i++){
-        const post = post.value.liekes[i];
-        if(post.user_id === user.id && like.post_id === post.value.id) {
+    for(let i = 0; i < post.value.likes.length; i++){
+        const postt = post.value.likes[i];
+        if(postt.user_id === user.id && postt.post_id === post.value.id) {
             isTrue = true;
         }
     }

@@ -31,11 +31,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/posts', [PostController::class, 'store'])->name('post.store');
         Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('post.destroy');
 
-        Route::get('/comments', [CommentController::class, 'store'])->name('comment.store');
+        Route::post('/comments', [CommentController::class, 'store'])->name('comment.store');
         Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
 
 
-        Route::get('/likes', [LikeController::class, 'store'])->name('like.store');
+        Route::post('/likes', [LikeController::class, 'store'])->name('like.store');
         Route::delete('/likes/{id}', [LikeController::class, 'destroy'])->name('like.destroy');
 });
 

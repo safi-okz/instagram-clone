@@ -25,7 +25,71 @@ onMounted(() => {
     window.addEventListener('resize', () => {
         width.value = window.innerWidth;
     })
-})
+});
+
+const addComment = (object) => {
+    console.log('comment data ', object.post.id)
+    router.post('/comments', {
+        post_id: object.post.id,
+        user_id: object.user.id,
+        comment: object.comment
+    }, {
+        onFinish: () => updatePost(object)
+    })
+}
+
+const updateLike = (object) => {
+    let deleteLike = false;
+    let id = null;
+
+    for(let i = 0; i < object.post.likes.length; i++){
+        const like = object.post.likes[i];
+
+        if(like.user_id == object.user.id && like.post_id === object.post.id){
+            deleteLike = true;
+            id = like.id;
+        }
+    }
+
+    if(deleteLike){
+        router.delete('/likes/' + id, {
+            onFinish: () => updatePost(object)
+        });
+    } else {
+        router.post('/likes', {
+            post_id: object.post.id
+        },
+        {
+            onFinish: () => updatePost(object)
+        })
+    }
+}
+
+const deleteFunc = (object) => {
+        let url = '';
+        if(object.deleteType === 'Post'){
+            url = '/posts/' + object.id;
+        } else {
+            url = '/comments/' + object.id;
+        }
+
+        router.delete(url, {
+            onFinish: () => updatePost(object)
+        });
+
+        if(object.deleteType === 'Post'){
+            openOverlay = false
+        }
+}
+
+const updatePost = (object) => {
+    for(let i = 0; i < posts.value.data.length; i++){
+        const post = posts.value.data[i];
+        if(post.id === object.post.id) {
+            currentPost.value = post;
+        }
+    }
+}
 </script>
 
 <template>
@@ -84,7 +148,7 @@ onMounted(() => {
                             :post="post"
                             @like="updateLike($event)"
                  />
-                <div class="text-black font-extrabold py-1">{{ post.liekes.length }} Likes</div>
+                <div class="text-black font-extrabold py-1">{{ post.likes.length }} Likes</div>
 
                 <div>
                     <span class="text-black font-extrabold">{{ post.user.name }}</span>
@@ -102,6 +166,9 @@ onMounted(() => {
     <ShowPostOverlay
                 v-if="openOverlay"
                 :post="currentPost"
+                @addComment="addComment($event)"
+                @updateLike="updateLike($event)"
+                @deleteSelected="deleteFunc($event)"
                 @closeOverlay="openOverlay = false"
     />
 </template>

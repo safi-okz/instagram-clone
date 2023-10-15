@@ -16,7 +16,7 @@ class FileService {
 
             $file = null;
             if($type == "user"){
-                $file = Image::make($request->file('file')->resize(400, 400));
+                $file = Image::make($request->file('file'))->resize(400, 400);
             } else {
                 $file = Image::make($request->file('file'));
             }

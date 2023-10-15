@@ -73,7 +73,7 @@
                             </div>
 
                             <div class="text-[13px] pl-[55px]">
-                                This is a comment section
+                                {{ comment.text }}
                             </div>
                         </div>
 
@@ -143,6 +143,7 @@ import EmoticonHappyOutline from 'vue-material-design-icons/EmoticonHappyOutline
 let comment = ref('')
 let deleteType = ref(null)
 let id = ref(null);
+let textarea = ref(null)
 
 const user = usePage().props.auth.user;
 
